@@ -8,8 +8,9 @@ const restaurant = restaurants.find(r => r.name === name);
 </script>
 
 <template>
-<div>
-   <div class="restaurant-container">
+  <div>
+    <NuxtLayout name="custom" v-if="restaurant">
+      <div class="restaurant-container">
         <div class="image-container">
           <img :src="restaurant.imageUrl" alt="" />
         </div>
@@ -26,7 +27,24 @@ const restaurant = restaurants.find(r => r.name === name);
           <p class="content">{{ restaurant.content }}</p>
         </div>
       </div>
-</div>
+    </NuxtLayout>
+
+    <div class="restaurant-not-found" v-else>
+      <NuxtLayout name="error">
+        <template #header>
+          <h1>Restaurant not found</h1>
+        </template>
+        <template #redirectEl>
+          <button
+            class="btn btn-primary btn-lg"
+            @click="$router.push('/restaurants')"
+          >
+            Go Back
+          </button>
+        </template>
+      </NuxtLayout>
+    </div>
+  </div>
 </template>
 
 <style scoped>
